@@ -85,7 +85,7 @@ initMap = () => {
       'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     id: 'mapbox.streets'
   }).addTo(newMap);
-
+// 
   updateRestaurants();
 }
 /* window.initMap = () => {
