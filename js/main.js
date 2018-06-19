@@ -7,28 +7,31 @@ var markers = [];
 
   // var indexController = this;
 
-  navigator.serviceWorker.register('/js/sw.js').then(reg => {
-    console.log('sw registered');
-    
-    if (!navigator.serviceWorker.controller) {
-      return;
-    }
+  navigator.serviceWorker
+    .register('/sw.js')
+    .then(reg => {
+      console.log('sw registered');
 
-    if (reg.waiting) {
-      // indexController._updateReady(reg.waiting);
-      alert('there is an update ready');
-      return console.log('there is an update ready!');
-    }
+      if (!navigator.serviceWorker.controller) {
+        return;
+      }
 
-    // if (reg.installing) {
-    //   indexController._trackInstalling(reg.installing);
-    //   return;
-    // }
+      if (reg.waiting) {
+        // _updateReady(reg.waiting);
+        alert('there is an update ready');
+        return console.log('there is an update ready!');
+      }
 
-    reg.addEventListener('updatefound', () => {
-      console.log('updatefound event triggered');
-    });
-  }).catch(e => console.log('error while registering', e));
+      // if (reg.installing) {
+      //   indexController._trackInstalling(reg.installing);
+      //   return;
+      // }
+
+      reg.addEventListener('updatefound', () => {
+        console.log('updatefound event triggered');
+      });
+    })
+    .catch(e => console.log('error while registering', e));
 
   // Ensure refresh is only called once.
   // This works around a bug in "force update on reload".
@@ -38,6 +41,15 @@ var markers = [];
     window.location.reload();
     refreshing = true;
   });
+
+  function _trackInstalling(worker) {
+    var indexController = this;
+    worker.addEventListener('statechange', function() {
+      if (worker.state == 'installed') {
+        _updateReady(worker);
+      }
+    });
+  }
 })();
 
 /**
