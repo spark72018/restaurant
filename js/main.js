@@ -13,10 +13,12 @@ var markers = [];
     if (!navigator.serviceWorker.controller) {
       return;
     }
-    // if (reg.waiting) {
-    //   indexController._updateReady(reg.waiting);
-    //   return;
-    // }
+
+    if (reg.waiting) {
+      // indexController._updateReady(reg.waiting);
+      alert('there is an update ready');
+      return console.log('there is an update ready!');
+    }
 
     // if (reg.installing) {
     //   indexController._trackInstalling(reg.installing);

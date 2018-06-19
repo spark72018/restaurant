@@ -16,7 +16,9 @@ const URLS_TO_CACHE = [
   'img/7.jpg',
   'img/8.jpg',
   'img/9.jpg',
-  'img/10.jpg'
+  'img/10.jpg',
+  'index.html',
+  'restaurant.html'
 ];
 
 self.addEventListener('install', e => {});
