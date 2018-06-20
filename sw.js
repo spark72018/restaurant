@@ -1,8 +1,6 @@
 const URLS_TO_CACHE = [
   'js/dbhelper.js',
-  'https://unpkg.com/leaflet@1.3.1/dist/leaflet.js',
   'js/main.js',
-  'https://unpkg.com/leaflet@1.3.1/dist/leaflet.css',
   'css/styles.css',
   'data/restaurants.json',
   'img/1.jpg',
@@ -36,3 +34,7 @@ self.addEventListener('fetch', e => {
     caches.match(e.request).then(response => response || fetch(e.request))
   );
 });
+
+self.addEventListener('activate', e => {
+  console.log('Activating new service worker...');
+})
