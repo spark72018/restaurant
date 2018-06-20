@@ -6,26 +6,27 @@ var markers = [];
   if (!navigator.serviceWorker) return;
 
   // var indexController = this;
-
+  
   navigator.serviceWorker
     .register('/sw.js')
     .then(reg => {
       console.log('sw registered');
 
       if (!navigator.serviceWorker.controller) {
+        console.log('no navigator.serviceWorker.controller');
         return;
       }
 
       if (reg.waiting) {
-        // _updateReady(reg.waiting);
         alert('there is an update ready');
         return console.log('there is an update ready!');
       }
 
-      // if (reg.installing) {
-      //   indexController._trackInstalling(reg.installing);
-      //   return;
-      // }
+      if (reg.installing) {
+        // indexController._trackInstalling(reg.installing);
+        console.log('reg.installing block');
+        return;
+      }
 
       reg.addEventListener('updatefound', () => {
         console.log('updatefound event triggered');
@@ -37,6 +38,7 @@ var markers = [];
   // This works around a bug in "force update on reload".
   let refreshing;
   navigator.serviceWorker.addEventListener('controllerchange', () => {
+    console.log('controllerchange block');
     if (refreshing) return;
     window.location.reload();
     refreshing = true;
@@ -45,8 +47,9 @@ var markers = [];
   function _trackInstalling(worker) {
     var indexController = this;
     worker.addEventListener('statechange', function() {
-      if (worker.state == 'installed') {
-        _updateReady(worker);
+      if (worker.state === 'installed') {
+        // TODO
+        // _updateReady(worker);
       }
     });
   }
