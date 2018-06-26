@@ -2,58 +2,58 @@ let restaurants, neighborhoods, cuisines;
 var newMap;
 var markers = [];
 
-(function registerServiceWorker() {
-  if (!navigator.serviceWorker) return;
+// (function registerServiceWorker() {
+//   if (!navigator.serviceWorker) return;
 
-  // var indexController = this;
+//   // var indexController = this;
   
-  navigator.serviceWorker
-    .register('/sw.js')
-    .then(reg => {
-      console.log('sw registered');
+//   navigator.serviceWorker
+//     .register('/sw.js')
+//     .then(reg => {
+//       console.log('sw registered');
 
-      if (!navigator.serviceWorker.controller) {
-        console.log('no navigator.serviceWorker.controller');
-        return;
-      }
+//       if (!navigator.serviceWorker.controller) {
+//         console.log('no navigator.serviceWorker.controller');
+//         return;
+//       }
 
-      if (reg.waiting) {
-        alert('there is an update ready');
-        return console.log('there is an update ready!');
-      }
+//       if (reg.waiting) {
+//         alert('there is an update ready');
+//         return console.log('there is an update ready!');
+//       }
 
-      if (reg.installing) {
-        // indexController._trackInstalling(reg.installing);
-        console.log('reg.installing block');
-        return;
-      }
+//       if (reg.installing) {
+//         // indexController._trackInstalling(reg.installing);
+//         console.log('reg.installing block');
+//         return;
+//       }
 
-      reg.addEventListener('updatefound', () => {
-        console.log('updatefound event triggered');
-      });
-    })
-    .catch(e => console.log('error while registering', e));
+//       reg.addEventListener('updatefound', () => {
+//         console.log('updatefound event triggered');
+//       });
+//     })
+//     .catch(e => console.log('error while registering', e));
 
-  // Ensure refresh is only called once.
-  // This works around a bug in "force update on reload".
-  let refreshing;
-  navigator.serviceWorker.addEventListener('controllerchange', () => {
-    console.log('controllerchange block');
-    if (refreshing) return;
-    window.location.reload();
-    refreshing = true;
-  });
+//   // Ensure refresh is only called once.
+//   // This works around a bug in "force update on reload".
+//   let refreshing;
+//   navigator.serviceWorker.addEventListener('controllerchange', () => {
+//     console.log('controllerchange block');
+//     if (refreshing) return;
+//     window.location.reload();
+//     refreshing = true;
+//   });
 
-  function _trackInstalling(worker) {
-    var indexController = this;
-    worker.addEventListener('statechange', function() {
-      if (worker.state === 'installed') {
-        // TODO
-        // _updateReady(worker);
-      }
-    });
-  }
-})();
+//   function _trackInstalling(worker) {
+//     var indexController = this;
+//     worker.addEventListener('statechange', function() {
+//       if (worker.state === 'installed') {
+//         // TODO
+//         // _updateReady(worker);
+//       }
+//     });
+//   }
+// })();
 
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
@@ -259,6 +259,9 @@ addMarkersToMap = (restaurants = self.restaurants) => {
     self.markers.push(marker);
   });
 };
+
+const filterOptionsDiv = document.getElementsByClassName('filter-options')[0];
+filterOptionsDiv.setAttribute('role', 'form');
 /* addMarkersToMap = (restaurants = self.restaurants) => {
   restaurants.forEach(restaurant => {
     // Add marker to the map
