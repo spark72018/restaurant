@@ -6,7 +6,7 @@ var markers = [];
 //   if (!navigator.serviceWorker) return;
 
 //   // var indexController = this;
-  
+
 //   navigator.serviceWorker
 //     .register('/sw.js')
 //     .then(reg => {
@@ -223,6 +223,7 @@ createRestaurantHTML = restaurant => {
   const image = document.createElement('img');
   image.className = 'restaurant-img';
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  image.setAttribute('alt', `${restaurant.name} restaurant image`);
   li.append(image);
 
   const name = document.createElement('h1');
@@ -240,6 +241,7 @@ createRestaurantHTML = restaurant => {
   const more = document.createElement('a');
   more.innerHTML = 'View Details';
   more.href = DBHelper.urlForRestaurant(restaurant);
+  more.setAttribute('role', 'link');
   li.append(more);
 
   return li;
@@ -261,7 +263,8 @@ addMarkersToMap = (restaurants = self.restaurants) => {
 };
 
 const filterOptionsDiv = document.getElementsByClassName('filter-options')[0];
-filterOptionsDiv.setAttribute('role', 'form');
+  filterOptionsDiv.setAttribute('role', 'form');
+// console.log('anchorTags is', );
 /* addMarkersToMap = (restaurants = self.restaurants) => {
   restaurants.forEach(restaurant => {
     // Add marker to the map
